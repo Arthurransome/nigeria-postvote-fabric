@@ -1,0 +1,71 @@
+{
+  "name": "test-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "Org1MSP",
+    "tlsEnable": true,
+    "adminCredential": { "id": "admin", "password": "adminpw" },
+    "connection": {
+      "timeout": {
+        "peer": { "endorser": "300" },
+        "orderer": "300"
+      }
+    }
+  },
+  "channels": {
+    "mychannel": {
+      "orderers": ["orderer.example.com"],
+      "peers": {
+        "peer0.org1.example.com": {},
+        "peer0.org2.example.com": {}
+      }
+    }
+  },
+  "organizations": {
+    "Org1MSP": {
+      "mspid": "Org1MSP",
+      "peers": ["peer0.org1.example.com"],
+      "certificateAuthorities": ["ca.org1.example.com"],
+      "adminPrivateKey": {
+        "path": "/opt/explorer/app/platform/fabric/connection-profile/admin-org1.key"
+      },
+      "signedCert": {
+        "path": "/opt/explorer/app/platform/fabric/connection-profile/admin-org1-cert.pem"
+      }
+    },
+    "Org2MSP": {
+      "mspid": "Org2MSP",
+      "peers": ["peer0.org2.example.com"],
+      "certificateAuthorities": ["ca.org2.example.com"]
+    }
+  },
+  "orderers": {
+    "orderer.example.com": {
+      "url": "grpcs://orderer.example.com:7050",
+      "grpcOptions": { "ssl-target-name-override": "orderer.example.com" },
+      "tlsCACerts": {
+        "path": "/tmp/crypto/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem"
+      }
+    }
+  },
+  "peers": {
+    "peer0.org1.example.com": {
+      "url": "grpcs://peer0.org1.example.com:7051",
+      "grpcOptions": { "ssl-target-name-override": "peer0.org1.example.com" },
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
+      }
+    },
+    "peer0.org2.example.com": {
+      "url": "grpcs://peer0.org2.example.com:9051",
+      "grpcOptions": { "ssl-target-name-override": "peer0.org2.example.com" },
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.org1.example.com": { "url": "http://ca.org1.example.com:7054", "caName": "ca-org1" },
+    "ca.org2.example.com": { "url": "http://ca.org2.example.com:8054", "caName": "ca-org2" }
+  }
+}

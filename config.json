@@ -1,0 +1,10 @@
+{
+  "network-configs": {
+    "network-1": {
+      "name": "test-network",
+      "profile": "./connection-profile/test-network.json"
+    }
+  },
+  "auth": { "enabled": false },
+  "license": "Apache-2.0"
+}

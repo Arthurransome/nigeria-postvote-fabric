@@ -1,0 +1,47 @@
+version: '2.1'
+
+services:
+  explorerdb:
+    image: postgres:13
+    container_name: explorerdb.mynetwork.com
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=fabricexplorer
+    ports:
+      - "5433:5432"
+      healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 10
+    networks:
+      - fabric
+
+  explorer:
+    image: hyperledger/explorer:latest
+    container_name: explorer.mynetwork.com
+    depends_on:
+      - explorerdb
+    environment:
+      - DATABASE_HOST=explorerdb.mynetwork.com
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWD=password
+      - DATABASE_DATABASE=fabricexplorer
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=info
+      - DISCOVERY_AS_LOCALHOST=false
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.json:/opt/explorer/app/platform/fabric/config.json
+      - ./connection-profile:/opt/explorer/app/platform/fabric/connection-profile
+      - /home/ransome/fabric-dev/fabric-samples/test-network/organizations:/tmp/crypto:ro
+    networks:
+      - fabric
+
+networks:
+  fabric:
+    external: true
+    name: fabric_test

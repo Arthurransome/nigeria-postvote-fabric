@@ -1,0 +1,50 @@
+version: '2.1'
+
+services:
+  explorerdb:
+    image: postgres:13
+    container_name: explorerdb.mynetwork.com     # <-- unique name
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=fabricexplorer
+    ports:
+      - "5433:5432"   # host:container (use 5433 on host to avoid conflicts)
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 10
+    networks:
+      - fabric
+
+  explorer:
+    image: hyperledger/explorer:arm64
+    container_name: explorer.mynetwork.com       # <-- UI gets this name
+    depends_on:
+      - explorerdb
+    environment:
+      - DATABASE_HOST=explorerdb.mynetwork.com   # <-- must match DB container_name
+      - DATABASE_PORT=5432
+      - AUTH_ENABLED=false
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWD=password
+      - DATABASE_DATABASE=fabricexplorer
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=info
+      - DISCOVERY_AS_LOCALHOST=false
+    ports:
+      - "8080:8080"      # change to "8081:8080" if 8080 is in use
+    volumes:
+      - /home/ransome/fabric-dev/blockchain-explorer/examples/net1/config.json:/opt/explorer/app/platform/fabric/config.json
+      - /home/ransome/fabric-dev/blockchain-explorer/examples/net1/connection-profile:/opt/explorer/app/platform/fabric/connection-profile
+      - /home/ransome/fabric-dev/fabric-samples/test-network/organizations:/tmp/crypto:ro
+
+    networks:
+      - fabric
+
+networks:
+  fabric:
+    external: true
+    name: fabric_test
+

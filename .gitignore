@@ -1,0 +1,28 @@
+# System junk
+.DS_Store
+*.log
+*.tmp
+
+# Docker
+*.pid
+*.sock
+*.tar
+*.lock
+tmp/
+logs/
+wallet/
+postgres-data/
+fabricexplorer/
+
+# Node modules
+node_modules/
+npm-debug.log*
+
+# VSCode and editor junk
+.vscode/
+.idea/
+
+# Ignore local crypto if you have full org credentials elsewhere
+organizations/
+connection-profile/admin-org1.key
+connection-profile/admin-org1-cert.pem

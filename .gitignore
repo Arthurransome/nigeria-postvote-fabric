@@ -26,3 +26,4 @@ npm-debug.log*
 organizations/
 connection-profile/admin-org1.key
 connection-profile/admin-org1-cert.pem
+fabric-samples/

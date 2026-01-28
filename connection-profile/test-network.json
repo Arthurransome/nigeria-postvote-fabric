@@ -2,19 +2,27 @@
   "name": "test-network",
   "version": "1.0.0",
   "client": {
+    "enableAuthentication": false,
     "organization": "Org1MSP",
     "tlsEnable": true,
-    "adminCredential": { "id": "admin", "password": "adminpw" },
+    "adminCredential": {
+      "id": "admin",
+      "password": "adminpw"
+    },
     "connection": {
       "timeout": {
-        "peer": { "endorser": "300" },
+        "peer": {
+          "endorser": "300"
+        },
         "orderer": "300"
       }
     }
   },
   "channels": {
     "mychannel": {
-      "orderers": ["orderer.example.com"],
+      "orderers": [
+        "orderer.example.com"
+      ],
       "peers": {
         "peer0.org1.example.com": {},
         "peer0.org2.example.com": {}
@@ -24,8 +32,9 @@
   "organizations": {
     "Org1MSP": {
       "mspid": "Org1MSP",
-      "peers": ["peer0.org1.example.com"],
-      "certificateAuthorities": ["ca.org1.example.com"],
+      "peers": [
+        "peer0.org1.example.com"
+      ],
       "adminPrivateKey": {
         "path": "/opt/explorer/app/platform/fabric/connection-profile/admin-org1.key"
       },
@@ -35,37 +44,41 @@
     },
     "Org2MSP": {
       "mspid": "Org2MSP",
-      "peers": ["peer0.org2.example.com"],
-      "certificateAuthorities": ["ca.org2.example.com"]
+      "peers": [
+        "peer0.org2.example.com"
+      ]
     }
   },
   "orderers": {
     "orderer.example.com": {
       "url": "grpcs://orderer.example.com:7050",
-      "grpcOptions": { "ssl-target-name-override": "orderer.example.com" },
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer.example.com",
+        "hostnameOverride": "orderer.example.com"
+      },
       "tlsCACerts": {
-        "path": "/tmp/crypto/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem"
+        "pem": "-----BEGIN CERTIFICATE-----\nMIICCjCCAbGgAwIBAgIUIDOXjstJNch3/M98F5uOcPvqX30wCgYIKoZIzj0EAwIw\nYjELMAkGA1UEBhMCVVMxETAPBgNVBAgTCE5ldyBZb3JrMREwDwYDVQQHEwhOZXcg\nWW9yazEUMBIGA1UEChMLZXhhbXBsZS5jb20xFzAVBgNVBAMTDmNhLmV4YW1wbGUu\nY29tMB4XDTI2MDEyNzE5MzUwMFoXDTQxMDEyMzE5MzUwMFowYjELMAkGA1UEBhMC\nVVMxETAPBgNVBAgTCE5ldyBZb3JrMREwDwYDVQQHEwhOZXcgWW9yazEUMBIGA1UE\nChMLZXhhbXBsZS5jb20xFzAVBgNVBAMTDmNhLmV4YW1wbGUuY29tMFkwEwYHKoZI\nzj0CAQYIKoZIzj0DAQcDQgAEdA7UML3870LPxf1bXmJynJM/EKHjgP5N3RbcbitP\nU4jDiHztocg3tbmJuLrJbemeC/uqYjiFqyQRT0urHmf6mKNFMEMwDgYDVR0PAQH/\nBAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQEwHQYDVR0OBBYEFLenrfU8/RjPJQbD\nnKXxiNaIfR9jMAoGCCqGSM49BAMCA0cAMEQCIGwxzpf1Q+twYiM8GUxcwBEqRFFT\nJT5FKSELvWP/hWeHAiBhxqh36P2r5MlUt9fbSmyszFFVNGIeEco+MFObzGEoxQ==\n-----END CERTIFICATE-----\n"
       }
     }
   },
   "peers": {
     "peer0.org1.example.com": {
       "url": "grpcs://peer0.org1.example.com:7051",
-      "grpcOptions": { "ssl-target-name-override": "peer0.org1.example.com" },
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.org1.example.com"
+      },
       "tlsCACerts": {
         "path": "/tmp/crypto/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
       }
     },
     "peer0.org2.example.com": {
       "url": "grpcs://peer0.org2.example.com:9051",
-      "grpcOptions": { "ssl-target-name-override": "peer0.org2.example.com" },
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.org2.example.com"
+      },
       "tlsCACerts": {
         "path": "/tmp/crypto/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
       }
     }
-  },
-  "certificateAuthorities": {
-    "ca.org1.example.com": { "url": "http://ca.org1.example.com:7054", "caName": "ca-org1" },
-    "ca.org2.example.com": { "url": "http://ca.org2.example.com:8054", "caName": "ca-org2" }
   }
 }

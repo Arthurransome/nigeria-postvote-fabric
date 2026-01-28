@@ -18,7 +18,7 @@ services:
       - fabric
 
   explorer:
-    image: hyperledger/explorer:arm64
+    image: ghcr.io/hyperledger-labs/explorer:latest
     container_name: explorer.mynetwork.com       # <-- UI gets this name
     depends_on:
       - explorerdb
@@ -36,9 +36,9 @@ services:
     ports:
       - "8080:8080"      # change to "8081:8080" if 8080 is in use
     volumes:
-      - /home/ransome/fabric-dev/blockchain-explorer/examples/net1/config.json:/opt/explorer/app/platform/fabric/config.json
-      - /home/ransome/fabric-dev/blockchain-explorer/examples/net1/connection-profile:/opt/explorer/app/platform/fabric/connection-profile
-      - /home/ransome/fabric-dev/fabric-samples/test-network/organizations:/tmp/crypto:ro
+      - ./config.json:/opt/explorer/app/platform/fabric/config.json
+      - ./connection-profile:/opt/explorer/app/platform/fabric/connection-profile
+      - ./fabric-samples/test-network/organizations:/tmp/crypto:ro
 
     networks:
       - fabric
